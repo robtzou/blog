@@ -53,3 +53,9 @@ footer {
   background: var(--midnight-green);
   color: var(--papaya-whip);
 }
+
+h1 {
+    width:500px;
+    margin: 0 auto;
+    text-align: center;
+}
