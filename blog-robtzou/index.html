@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -429,11 +428,12 @@
         <h2 class="section-title fade-in">My Projects</h2>
         
         <div class="project-grid">
+            <!-- Project 1: AI Calendar Agent -->
             <div class="project-card fade-in">
                 <div class="project-image">
                     <iframe 
                         src="https://www.youtube.com/embed/Y9l040krLMo?autoplay=1&mute=1&loop=1&playlist=Y9l040krLMo"
-                        frameborder="1" 
+                        frameborder="0" 
                         allow="autoplay; encrypted-media" 
                         style="width: 100%; height: 100%; border-radius: 15px;">
                     </iframe>
@@ -446,15 +446,16 @@
                     <span class="tech-tag">Google Calendar API</span>
                 </div>
                 <div class="project-links">
-                    <a href="#" class="project-link">
+                    <a href="https://github.com/robtzou/ai-calendar-agent" target="_blank" rel="noopener noreferrer" class="project-link">
                         <i class="fab fa-github"></i> Code
                     </a>
-                    <a href="#" class="project-link">
+                    <a href="https://www.youtube.com/watch?v=Y9l040krLMo" target="_blank" rel="noopener noreferrer" class="project-link">
                         <i class="fas fa-external-link-alt"></i> Live Demo
                     </a>
                 </div>
             </div>
 
+            <!-- Project 2: Donut Object Detection -->
             <div class="project-card fade-in">
                 <div class="project-image">
                     <iframe
@@ -475,12 +476,13 @@
                     <a href="https://github.com/robtzou/donut" target="_blank" rel="noopener noreferrer" class="project-link">
                         <i class="fab fa-github"></i> Code
                     </a>
-                    <a href="https://huggingface.co/spaces/robtzou/dunkinInventory" class="project-link">
+                    <a href="https://huggingface.co/spaces/robtzou/dunkinInventory" target="_blank" rel="noopener noreferrer" class="project-link">
                         <i class="fas fa-external-link-alt"></i> Live Demo
                     </a>
                 </div>
             </div>
 
+            <!-- Project 3: Placeholder -->
             <div class="project-card fade-in">
                 <div class="project-image">
                     <i class="fas fa-seedling"></i>
@@ -502,6 +504,7 @@
                 </div>
             </div>
 
+            <!-- Project 4: Placeholder -->
             <div class="project-card fade-in">
                 <div class="project-image">
                     <i class="fas fa-mountain"></i>
@@ -528,9 +531,10 @@
     <!-- Footer -->
     <footer id="contact" class="footer">
         <div class="social-links">
-            <a href="https://github.com/robtzou" class="social-link"><i class="fab fa-github"></i></a>
-            <a href="https://www.linkedin.com/in/robert-tzou/" class="social-link"><i class="fab fa-linkedin"></i></a>
-            <a href="https://imgur.com/gallery/i-dont-have-twitter-Bm32k" class="social-link"><i class="fab fa-twitter"></i></a>
+            <!-- FIX: Added target and rel attributes for consistency -->
+            <a href="https://github.com/robtzou" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/robert-tzou/" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-linkedin"></i></a>
+            <a href="https://imgur.com/gallery/i-dont-have-twitter-Bm32k" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-twitter"></i></a>
             <a href="mailto:bobbytzou@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
         </div>
         <p class="project-description">&copy; 2025 Robert Tzou.</p>
@@ -602,6 +606,18 @@
         for (let i = 0; i < 5; i++) {
             setTimeout(createMossParticle, i * 1000);
         }
+
+        // FIX: Handle external links being blocked by iframes
+        document.querySelectorAll('.project-link, .social-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const url = this.getAttribute('href');
+                // Only act on actual URLs, not placeholder '#' links
+                if (url && url !== '#') {
+                    e.preventDefault(); // Stop the default browser action
+                    window.open(url, '_blank', 'noopener,noreferrer'); // Open the link in a new tab
+                }
+            });
+        });
     </script>
 </body>
 </html>
