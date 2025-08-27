@@ -25,10 +25,11 @@
             pointer-events: none;
             opacity: 0.6;
             animation: float 20s infinite linear;
+            z-index: 1; /* Lower z-index to stay behind content */
         }
 
         .project-image iframe {
-            pointer-events: none;
+            pointer-events: auto; /* Changed from true to auto */
         }
         @keyframes float {
             0% {
@@ -120,6 +121,7 @@
                 radial-gradient(circle at 85% 70%, rgba(90, 120, 90, 0.08) 1px, transparent 1px);
             background-size: 50px 50px, 80px 80px;
             animation: moss-texture 30s ease-in-out infinite;
+            pointer-events: none; /* Ensure background doesn't interfere */
         }
 
         @keyframes moss-texture {
@@ -188,6 +190,7 @@
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
             transition: left 0.5s;
+            pointer-events: none; /* Ensure pseudo-element doesn't block interaction */
         }
 
         .cta-button:hover::before {
@@ -225,6 +228,7 @@
             height: 3px;
             background: linear-gradient(45deg, #5a7a5a, #7a9a7a);
             border-radius: 2px;
+            pointer-events: none; /* Ensure pseudo-element doesn't block interaction */
         }
 
         .project-grid {
@@ -243,6 +247,7 @@
             position: relative;
             overflow: hidden;
             backdrop-filter: blur(10px);
+            z-index: 10; /* Higher z-index to ensure content is above particles */
         }
 
         .project-card::before {
@@ -253,8 +258,10 @@
             right: 0;
             bottom: 0;
             background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), rgba(122, 154, 122, 0.1) 0%, transparent 50%);
-            opacity: 0;
+            opacity: 1;
             transition: opacity 0.3s ease;
+            pointer-events: none; /* CRITICAL: Ensure pseudo-element doesn't block text selection */
+            z-index: -1; /* Place behind the card content */
         }
 
         .project-card:hover::before {
@@ -265,6 +272,20 @@
             transform: translateY(-10px);
             border-color: #7a9a7a;
             box-shadow: 0 20px 40px rgba(45, 62, 45, 0.4);
+        }
+
+        .tech-tag {
+            background: rgba(122, 154, 122, 0.2);
+            color: #a8c8a8;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(122, 154, 122, 0.3);
+            display: inline-block; /* Ensure proper text selection */
+            user-select: text; /* CRITICAL: Enable text selection */
+            cursor: text; /* Show text cursor */
+            position: relative;
+            z-index: 20; /* Ensure tags are above other elements */
         }
 
         .project-image {
@@ -289,12 +310,20 @@
             font-size: 1.4rem;
             margin-bottom: 15px;
             color: #c4d4c4;
+            user-select: text; /* Enable text selection */
+            cursor: text; /* Show text cursor */
+            position: relative;
+            z-index: 20;
         }
 
         .project-description {
             color: #a8b8a8;
             line-height: 1.6;
             margin-bottom: 20px;
+            user-select: text; /* CRITICAL: Enable text selection */
+            cursor: text; /* Show text cursor when hovering over text */
+            position: relative;
+            z-index: 20; /* Ensure text is above background effects */
         }
 
         .project-tech {
@@ -302,20 +331,19 @@
             flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 20;
         }
-
-        .tech-tag {
-            background: rgba(122, 154, 122, 0.2);
-            color: #a8c8a8;
-            padding: 4px 12px;
-            border-radius: 20px;
-            font-size: 0.85rem;
-            border: 1px solid rgba(122, 154, 122, 0.3);
+        
+        .project-card:hover .tech-tag {
+            transform: scale(1.05);
         }
 
         .project-links {
             display: flex;
             gap: 15px;
+            position: relative;
+            z-index: 20; /* Ensure links are above background effects */
         }
 
         .project-link {
@@ -326,6 +354,10 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            cursor: pointer; /* Ensure proper cursor */
+            user-select: text; /* Enable text selection */
+            position: relative;
+            z-index: 25; /* Higher than other elements */
         }
 
         .project-link:hover {
@@ -446,7 +478,7 @@
                     <span class="tech-tag">Google Calendar API</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://github.com/robtzou/ai-calendar-agent" target="_blank" rel="noopener noreferrer" class="project-link">
+                    <a href="https://github.com/robtzou/mcp-tutorial" target="_blank" rel="noopener noreferrer" class="project-link">
                         <i class="fab fa-github"></i> Code
                     </a>
                     <a href="https://www.youtube.com/watch?v=Y9l040krLMo" target="_blank" rel="noopener noreferrer" class="project-link">
@@ -466,7 +498,7 @@
                     </iframe>
                 </div>
                 <h3 class="project-title">Donut Object Detection with YOLO11</h3>
-                <p class="project-description">Utilized Ultralytics YOLOv11 framework and trained in Google Colab on a custom dataset with just under 2,000 images labeled in Roboflow. A key step was leveraging data augmentation techniques like mosaic, noise, and random rotations to improve accuracy and learning. (Sorry it's recorded vertical 😢)</p>
+                <p class="project-description">Utilized Ultralytics YOLOv11 framework and trained in Google Colab on a custom dataset with just under 2,000 images labeled in Roboflow. A key step was leveraging data augmentation techniques like mosaic, noise, and random rotations to improve accuracy and learning. In short, I worked at Dunkin' Donuts this past summer and was ultra bored.</p>
                 <div class="project-tech">
                     <span class="tech-tag">Ultralytics</span>
                     <span class="tech-tag">Python</span>
@@ -476,8 +508,7 @@
                     <a href="https://github.com/robtzou/donut" target="_blank" rel="noopener noreferrer" class="project-link">
                         <i class="fab fa-github"></i> Code
                     </a>
-                    <a href="https://huggingface.co/spaces/robtzou/dunkinInventory" target="_blank" rel="noopener noreferrer" class="project-link">
-                        <i class="fas fa-external-link-alt"></i> Live Demo
+                    <a href="https://huggingface.co/spaces/robtzou/dunkinInventory" target="_blank" rel="noopener noreferrer" class="project-link"><i class="fas fa-external-link-alt"></i> Live Demo
                     </a>
                 </div>
             </div>
@@ -531,13 +562,12 @@
     <!-- Footer -->
     <footer id="contact" class="footer">
         <div class="social-links">
-            <!-- FIX: Added target and rel attributes for consistency -->
             <a href="https://github.com/robtzou" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-github"></i></a>
             <a href="https://www.linkedin.com/in/robert-tzou/" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-linkedin"></i></a>
             <a href="https://imgur.com/gallery/i-dont-have-twitter-Bm32k" target="_blank" rel="noopener noreferrer" class="social-link"><i class="fab fa-twitter"></i></a>
             <a href="mailto:bobbytzou@gmail.com" class="social-link"><i class="fas fa-envelope"></i></a>
         </div>
-        <p class="project-description">&copy; 2025 Robert Tzou.</p>
+        <p class="project-description">&copy; 2025 Robert Tzou</p>
     </footer>
 
     <script>
@@ -607,14 +637,14 @@
             setTimeout(createMossParticle, i * 1000);
         }
 
-        // FIX: Handle external links being blocked by iframes
+        // Handle external links
         document.querySelectorAll('.project-link, .social-link').forEach(link => {
             link.addEventListener('click', function(e) {
                 const url = this.getAttribute('href');
                 // Only act on actual URLs, not placeholder '#' links
                 if (url && url !== '#') {
-                    e.preventDefault(); // Stop the default browser action
-                    window.open(url, '_blank', 'noopener,noreferrer'); // Open the link in a new tab
+                    e.preventDefault();
+                    window.open(url, '_blank', 'noopener,noreferrer');
                 }
             });
         });
